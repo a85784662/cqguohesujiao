@@ -39,7 +39,7 @@
           气泡袋
         </div>
         <div class="two-nav-item" @click="twoNavClick('3')" :class="pronavigationId==='3'?'current':''">
-          气垫膜
+          塑料膜
         </div>
         <div class="two-nav-item" @click="twoNavClick('4')" :class="pronavigationId==='4'?'current':''">
           塑料袋
@@ -90,7 +90,7 @@
         </div>
         <div class="concat-item" v-for="item in contact.phones">
             <div class="concat-msg left">
-              <p class="lmw-t">手机</p>
+              <p class="lmw-t">{{item.type.name}}</p>
               <p>{{item.phoneNumber}}</p>
             </div>
             <div class="concat-tel-btn right">
@@ -99,7 +99,7 @@
                 <span class="text-tx">电话</span>
               </a>
             </div>
-            <div class="concat-msg-btn right">
+            <div class="concat-msg-btn right" v-if="item.type.name === '手机'">
               <a :href="item.phoneNumber?'sms:'+item.phoneNumber:''">
                 <span class="msg-icon"></span>
                 <span class="text-tx">短信</span>
@@ -150,7 +150,7 @@ export default {
   },
   mounted(){
     //向服务端发请求，获取初始数据。
-    this.$http.get('http://39.107.241.170:3000/api/guohe/main').then(function(res){
+    this.$http.get('http://39.107.241.170:3001/api/guohe/main').then(function(res){
       var msg = res.body;
       if(msg.code===0){
         this.company = msg.data.company
@@ -243,7 +243,6 @@ export default {
   justify-content:space-around;
 }
 .two-nav-item{
-  width:1.7rem;
   height: 1rem;
   line-height: 1rem;
   text-align: center;

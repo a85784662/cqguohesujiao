@@ -14,7 +14,7 @@
           气泡袋
         </div>
         <div class="two-nav-item" @click="twoNavClick('3')" :class="pronavigationId==='3'?'current':''">
-          气垫膜
+          塑料膜
         </div>
         <div class="two-nav-item" @click="twoNavClick('4')" :class="pronavigationId==='4'?'current':''">
           塑料袋
@@ -27,6 +27,7 @@
           <div class="goods" :class="{hot:item.hot}" @click="toGoodsdetails(item.id)" v-for="item in initdata">
             <div class="photo left">
               <img :src="item.image">
+              <span v-show="item.hot" class="my-hot"></span>
             </div>
             <div class="text-cont left">
               <div class="goods-name">{{item.name}}</div>
@@ -64,7 +65,7 @@ export default {
   created(){
     if(this.$route.query.pronavigationId){
       this.pronavigationId = this.$route.query.pronavigationId;
-      this.$http.get('http://39.107.241.170:3000/api/guohe/products?page=1&type='+this.pronavigationId).then(function(res){
+      this.$http.get('http://39.107.241.170:3001/api/guohe/products?page=1&type='+this.pronavigationId).then(function(res){
         var msg = res.body;
         if(msg.code===0){
           this.initdata = msg.data;
@@ -85,7 +86,7 @@ export default {
     }else{
 
       //向服务端发请求，获取初始数据。
-      this.$http.get('http://39.107.241.170:3000/api/guohe/products?page=1&type=1').then(function(res){
+      this.$http.get('http://39.107.241.170:3001/api/guohe/products?page=1&type=1').then(function(res){
         var msg = res.body;
         if(msg.code===0){
           this.initdata = msg.data
@@ -108,7 +109,7 @@ export default {
       
 
       this.pronavigationId = index;
-      this.$http.get('http://39.107.241.170:3000/api/guohe/products?page=1&type='+index).then(function(res){
+      this.$http.get('http://39.107.241.170:3001/api/guohe/products?page=1&type='+index).then(function(res){
         var msg = res.body;
         if(msg.code===0){
           this.initdata = msg.data
@@ -134,7 +135,7 @@ export default {
     seeMore(){
       //查看更多（分页）
       this.currentPage++
-      this.$http.get('http://39.107.241.170:3000/api/guohe/products?page='+this.currentPage+'&type='+this.pronavigationId).then(function(res){
+      this.$http.get('http://39.107.241.170:3001/api/guohe/products?page='+this.currentPage+'&type='+this.pronavigationId).then(function(res){
         var msg = res.body;
         if(msg.code===0){
           if(msg.data.length===0){
@@ -205,7 +206,6 @@ export default {
   justify-content:space-around;
 }
 .two-nav-item{
-  width:1.7rem;
   height: 1rem;
   line-height: 1rem;
   text-align: center;
@@ -330,6 +330,16 @@ export default {
 }
 [data-dpr="3"] .see-div{
     font-size: 42px;
+}
+
+.my-hot{
+  width: .85rem;
+  height: .85rem;
+  background: url("hot.png") no-repeat center center;
+  background-size: .85rem .85rem;
+  position: absolute;
+  left: -0.1rem;
+  top:-0.4rem;
 }
 
 </style>

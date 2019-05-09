@@ -13,7 +13,7 @@
       <div class="concat-wrap">
         <div class="concat-item" v-for="item in contact.phones">
             <div class="concat-msg left">
-              <p class="lmw-t">手机</p>
+              <p class="lmw-t">{{item.type.name}}</p>
               <p>{{item.phoneNumber}}</p>
             </div>
             <div class="concat-tel-btn right">
@@ -22,7 +22,7 @@
                 <span class="text-tx">电话</span>
               </a>
             </div>
-            <div class="concat-msg-btn right">
+            <div class="concat-msg-btn right" v-if="item.type.name === '手机'">
               <a :href="item.phoneNumber?'sms:'+item.phoneNumber:''">
                 <span class="msg-icon"></span>
                 <span class="text-tx">短信</span>
@@ -92,7 +92,7 @@ export default {
   created(){
     this.myid = this.$route.query.myid;
     //向服务器获取数据
-    this.$http.get('http://39.107.241.170:3000/api/guohe/product?id='+this.myid).then(function(res){
+    this.$http.get('http://39.107.241.170:3001/api/guohe/product?id='+this.myid).then(function(res){
         var msg = res.body;
         if(msg.code===0){
           //this.initdata = msg.data;
@@ -125,7 +125,7 @@ export default {
     },
     toGoodsdetails(ID){
       //向服务器获取数据
-      this.$http.get('http://39.107.241.170:3000/api/guohe/product?id='+ID).then(function(res){
+      this.$http.get('http://39.107.241.170:3001/api/guohe/product?id='+ID).then(function(res){
         var msg = res.body;
         if(msg.code===0){
           //this.initdata = msg.data;
@@ -317,7 +317,7 @@ export default {
 
 .goods-descript{
   width: 100%;
-  height:7.9rem;
+  min-height:7.9rem;
   overflow:hidden;
   position: relative;
   font-size: 16px;

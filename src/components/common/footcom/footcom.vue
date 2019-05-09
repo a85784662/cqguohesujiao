@@ -16,7 +16,7 @@ export default {
   },
   created(){
     //向服务端发请求，获取初始数据。
-    this.$http.get('http://39.107.241.170:3000/api/guohe/phone').then(function(res){
+    this.$http.get('http://39.107.241.170:3001/api/guohe/phone').then(function(res){
       var msg = res.body;
       if(msg.code===0){
         this.contact =  msg.data
